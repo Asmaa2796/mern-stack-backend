@@ -19,7 +19,10 @@ mongoose.connect(process.env.MONGO_URI, {
 const bookRoutes = require('./routes/bookRoutes');
 
 // middleware
-app.use(cors({ origin: '*' }));
+app.use(cors({
+  origin: "mern-stack-fullstack.netlify.app",
+  credentials: true,
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Static file serving (uploaded images)
