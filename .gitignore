@@ -1,0 +1,5 @@
+# mern-book-app/.gitignore
+
+node_modules/
+.env
+uploads/
