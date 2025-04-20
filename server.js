@@ -19,8 +19,10 @@ mongoose.connect(process.env.MONGO_URI, {
 const bookRoutes = require('./routes/bookRoutes');
 
 // middleware
+const allowedOrigin = process.env.FRONTEND_URL;
+
 app.use(cors({
-  origin: "mern-stack-fullstack.netlify.app",
+  origin: allowedOrigin,
   credentials: true,
 }));
 app.use(express.json());
