@@ -18,12 +18,11 @@ mongoose.connect(process.env.MONGO_URI, {
 }).catch(err => console.error(err));
 
 // middleware
-const uploadDir = path.join(__dirname, "uploads");
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
-}
-const allowedOrigin = process.env.FRONTEND_URL;
-
+app.use('/uploads', (req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_URL);
+  res.setHeader('Access-Control-Allow-Methods', 'GET');
+  next();
+}, express.static(path.join(__dirname, 'uploads')));
 app.use(cors({
   origin: allowedOrigin,
   credentials: true,
