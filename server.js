@@ -15,20 +15,25 @@ mongoose.connect(process.env.MONGO_URI, {
   app.listen(PORT, () => console.log('Server running on port 5000'));
 }).catch(err => console.error(err));
 
-// routes
-const bookRoutes = require('./routes/bookRoutes');
-
 // middleware
+const uploadDir = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
 const allowedOrigin = process.env.FRONTEND_URL;
 
 app.use(cors({
   origin: allowedOrigin,
   credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"],
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Static file serving (uploaded images)
 app.use('/uploads', express.static('uploads'));
+// routes
+const bookRoutes = require('./routes/bookRoutes');
 
 // routes middlware
 app.use('/api/books', bookRoutes);
