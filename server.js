@@ -30,7 +30,12 @@ if (!fs.existsSync(uploadDir)) {
 }
 
 // Static file serving for uploaded images
-app.use('/uploads', express.static(uploadDir));
+app.use('/uploads', (req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_URL);
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
+  next();
+}, express.static(uploadDir));
 
 // Routes
 const bookRoutes = require('./routes/bookRoutes');
